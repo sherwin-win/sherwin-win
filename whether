@@ -1,0 +1,26 @@
+// Detect whether there're embedded Youtube videos,
+  // and change to data-src if user opt-out of cookies.
+  function toggleVideoCookies(enabled) {
+    const vidFrames = findEmbeddedElements("iframe", YT_DOMAIN);
+
+    for (let vidFrame of vidFrames) {
+      toggleFrameSrc(vidFrame, enabled);
+      const vidContainer = vidFrame.parentElement;
+      toggleTagDisplay(vidContainer, enabled);
+    }
+  }
+
+  // Detect whether there're embedded Twitter/X posts,
+  // and change to data-src if user opt-out of cookies.
+  function toggleTwitterCookies(enabled) {
+    // Embedded Twitter posts
+    const tweetFrames = findEmbeddedElements("iframe", TW_DOMAIN);
+
+    for (let tweetFrame of tweetFrames) {
+      toggleFrameSrc(tweetFrame, enabled);
+      const tweetContainer = tweetFrame.parentElement;
+      // Only post iframe has a container parent
+      if (tweetContainer.classList.contains(TW_CONTAINER)) {
+        toggleTagDisplay(tweetContainer, enabled);
+      }
+    }
